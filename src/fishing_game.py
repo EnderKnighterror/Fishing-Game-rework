@@ -19,3 +19,34 @@ class Fish:
         objects = []
 
         file_path = os.path.join(ASSETS_FOLDER, 'fish.csv')
+
+        with open(file_path, 'r') as file:
+            csv_reader = csv.reader(file)
+            next(csv_reader)
+
+            for row in csv_reader:
+                name, keeper, fish, points_if_kept, points_if_released = row
+                obj = Fish(name, keeper, fish, points_if_kept, points_if_released)
+                objects.append(obj)
+
+        return objects
+
+    def go_fishing(fish):
+        fish_names = {
+            1: 'King George Whiting',
+            2: 'Lost bait',
+            3: 'Small Mulloway',
+            4: 'Snapper',
+            5: 'Large Mullet',
+            6: 'Seaweed Monster (random) clump of seaweed'
+        }
+
+        dice_roll = randint(1, 6)
+        fish_name = fish_names.get(dice_roll, None)
+
+        if fish_name is not None:
+            for fish_obj in fish:
+                if fish_obj.name == fish_name:
+                    return fish_obj
+
+        return None # Return None if no fish is found
