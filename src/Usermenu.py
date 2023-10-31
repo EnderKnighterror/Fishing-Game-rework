@@ -5,9 +5,50 @@ root = tk.Tk()
 root.title("User management system")
 root.geometry("300x200")
 
+
 def register():
     username = username_entry.get()
+    password = password_entry.get()
     if user_exists(username):
-        messagebox.showerror("error, User already excists")
+        messagebox.showerror("Error", "User already exists")
         return
-    password = generate_password
+    if len(password) < 8 or len(password) > 16:
+        messagebox.showerror("Error", "Password length must be between 8 and 16.")
+        return
+    hashed_password = hash_password(password)
+    save_user(username, hashed_password)
+    messagebox.showinfo("success", "User created successfully")
+
+
+def login():
+    username = username_entry.get()
+    password = password_entry.get()
+    if not user_exists(username):
+        messagebox.showerror("Error", "User does not exist.")
+        return
+    if not authenticate_user(Username, password):
+        messagebox.showerror("Error", "Incorrect password")
+        return
+    messagebox.showinfo("Success", "Login Successful")
+
+
+username_label = tk.Label(root, text="Username: ")
+username_label.pack(pady=5)
+
+password_label = tk.Label(root, text="Password: ")
+password_label.pack(pady=5)
+
+username_entry = tk.Entry(root)
+username_entry.pack(pady=5)
+
+password_entry = tk.Entry(root)
+password_entry.pack(pady=5)
+
+register_button = tk.Button(root, text="Register", command=register)
+register_button.pack(pady=5)
+
+login_button = tk.Button(root, text="Login", command=login)
+login_button.pack(pady=5)
+
+exit_button = tk.Button(root, text="Exit", command=root.quit)
+exit_button.pack(pady=5)
