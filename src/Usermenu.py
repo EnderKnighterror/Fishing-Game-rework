@@ -6,7 +6,7 @@ from tkinter import messagebox
 
 root = tk.Tk()
 root.title("User management system")
-root.geometry("300x200")
+root.geometry("500x400")
 
 ASSETS_FOLDER = "users.csv"
 
